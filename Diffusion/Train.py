@@ -10,7 +10,7 @@ from torchvision import transforms
 from torchvision.datasets import CIFAR10
 from torchvision.utils import save_image
 
-from Diffusion import GaussianDiffusionSampler, GaussianDiffusionTrainer
+from Diffusion import GaussianDiffusionSampler, GaussianDiffusionSampler_DDIM, GaussianDiffusionTrainer
 from Diffusion.Model import UNet
 from Scheduler import GradualWarmupScheduler
 
@@ -77,7 +77,7 @@ def eval(modelConfig: Dict):
         model.load_state_dict(ckpt)
         print("model load weight done.")
         model.eval()
-        sampler = GaussianDiffusionSampler(
+        sampler = GaussianDiffusionSampler_DDIM(
             model, modelConfig["beta_1"], modelConfig["beta_T"], modelConfig["T"]).to(device)
         # Sampled from standard normal distribution
         noisyImage = torch.randn(
